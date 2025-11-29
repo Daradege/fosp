@@ -2,3 +2,4 @@ quart
 aiobale
 flask
 toml
+httpx

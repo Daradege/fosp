@@ -132,4 +132,4 @@ async def get_image(user):
                 return Response(r.read(), mimetype="png")
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host="0.0.0.0", port=8070)
