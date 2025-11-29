@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فاسپ!</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        
+        @font-face {
+            font-family: Arad;
+            src: url(/Arad.ttf);
+        }
+        :root {
+            --rosewater: #f5e0dc;
+            --flamingo: #f2cdcd;
+            --pink: #f5c2e7;
+            --mauve: #cba6f7;
+            --red: #f38ba8;
+            --maroon: #eba0ac;
+            --peach: #fab387;
+            --yellow: #f9e2af;
+            --green: #a6e3a1;
+            --teal: #94e2d5;
+            --sky: #89dceb;
+            --sapphire: #74c7ec;
+            --blue: #89b4fa;
+            --lavender: #b4befe;
+            --text: #cdd6f4;
+            --subtext1: #bac2de;
+            --subtext0: #a6adc8;
+            --overlay2: #9399b2;
+            --overlay1: #7f849c;
+            --overlay0: #6c7086;
+            --surface2: #585b70;
+            --surface1: #45475a;
+            --surface0: #313244;
+            --base: #1e1e2e;
+            --mantle: #181825;
+            --crust: #11111b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arad', sans-serif;
+
+        }
+
+        body {
+            font-family: 'Arad', sans-serif;
+            background: linear-gradient(135deg, var(--base) 0%, var(--mantle) 100%);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .logo {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, var(--mauve) 0%, var(--blue) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            border: 4px solid var(--surface0);
+            box-shadow: 
+                0 0 0 4px var(--surface1),
+                0 20px 40px rgba(0, 0, 0, 0.4);
+            font-size: 3rem;
+            color: var(--base);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--text) 0%, var(--lavender) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.4rem;
+            color: var(--subtext1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 60px;
+            align-items: center;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+
+        .hero-text {
+            padding: 20px;
+        }
+
+        .hero-title {
+            font-size: 2.2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text);
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            color: var(--subtext1);
+            margin-bottom: 30px;
+            line-height: 1.8;
+        }
+
+        .features {
+            display: grid;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--subtext1);
+        }
+
+        .feature-item i {
+            color: var(--green);
+            font-size: 1.1rem;
+        }
+
+        
+        .demo-card {
+            background: var(--surface0);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid var(--surface1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .demo-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--mauve), var(--blue), var(--pink));
+        }
+
+        .demo-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .demo-avatar {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--peach) 0%, var(--yellow) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--base);
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .demo-user-info h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .demo-user-info p {
+            color: var(--subtext1);
+            font-size: 0.9rem;
+        }
+
+        .demo-bio {
+            background: var(--surface1);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 1px solid var(--surface2);
+            font-style: italic;
+            line-height: 1.6;
+        }
+
+        .demo-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .demo-tag {
+            background: linear-gradient(135deg, var(--surface1) 0%, var(--surface2) 100%);
+            color: var(--text);
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            border: 1px solid var(--surface2);
+        }
+
+        
+        .action-section {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .action-title {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-family: inherit;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--mauve) 0%, var(--blue) 100%);
+            color: var(--base);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(203, 166, 247, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--surface1);
+            color: var(--text);
+            border: 1px solid var(--surface2);
+        }
+
+        .btn-secondary:hover {
+            background: var(--surface2);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .feature-card {
+            background: var(--surface0);
+            border-radius: 16px;
+            padding: 30px;
+            border: 1px solid var(--surface1);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--mauve);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--mauve) 0%, var(--blue) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: var(--base);
+            font-size: 1.8rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--text);
+        }
+
+        .feature-card p {
+            color: var(--subtext1);
+            line-height: 1.6;
+        }
+
+        
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            background: var(--surface0);
+            border-radius: 20px;
+            border: 1px solid var(--surface1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 800px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-text {
+            color: var(--subtext1);
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-text i {
+            color: var(--red);
+            animation: heartbeat 2s ease-in-out infinite;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-link {
+            color: var(--lavender);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--mauve);
+        }
+
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .stagger-1 { animation-delay: 0.1s; }
+        .stagger-2 { animation-delay: 0.2s; }
+        .stagger-3 { animation-delay: 0.3s; }
+        .stagger-4 { animation-delay: 0.4s; }
+
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+            
+            .title {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .title {
+                font-size: 2rem;
+            }
+            
+            .logo {
+                width: 80px;
+                height: 80px;
+                font-size: 2rem;
+            }
+            
+            .hero-title {
+                font-size: 1.8rem;
+            }
+        }
+
+        
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--base);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--mauve), var(--blue));
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, var(--blue), var(--mauve));
+        }
+
+        
+        ::selection {
+            background: var(--mauve);
+            color: var(--base);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        
+        <header class="header fade-in">
+            <div class="logo">
+                <img src="/logo.png" alt="fosp!" style="border-radius: 100%;" width="100%">
+            </div>
+            <h1 class="title">فاسپ!</h1>
+            <p class="subtitle">
+                پروفایل شخصی خود را در بله ایجاد کنید و به زیباترین شکل به اشتراک بگذارید
+            </p>
+        </header>
+
+        
+        <main class="main-content">
+            <div class="hero-text fade-in stagger-1">
+                <h2 class="hero-title">پروفایل‌های زیبا و حرفه‌ای در بله</h2>
+                <p class="hero-description">
+                    با استفاده از این سرویس می‌توانید پروفایل شخصی خود را با فرمت TOML ایجاد کرده 
+                    و در کانال بله خود قرار دهید. دیگران می‌توانند با وارد کردن نام کاربری شما، 
+                    پروفایل زیبای شما را مشاهده کنند.
+                </p>
+                
+                <div class="features">
+                    <div class="feature-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>طراحی واکنش‌گرا و مدرن</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>پشتیبانی از تصویر پروفایل</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>نمایش علاقه‌مندی‌ها و مهارت‌ها</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>لینک‌های اجتماعی یکپارچه</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="demo-card fade-in stagger-2">
+                <div class="demo-header">
+                    <div class="demo-avatar">ع</div>
+                    <div class="demo-user-info">
+                        <h3>علی صفامنش</h3>
+                        <p>@daradege</p>
+                    </div>
+                </div>
+                <div class="demo-bio">
+                    برنامه نویس بک اند، طرفدار آزادی نرم افزار، توسعه دهنده نرم افزار های متن باز.
+                </div>
+                <div class="demo-tags">
+                    <span class="demo-tag">Python</span>
+                    <span class="demo-tag">C</span>
+                    <span class="demo-tag">Linux</span>
+                    <span class="demo-tag">PHP</span>
+                    <span class="demo-tag">C#</span>
+                    <span class="demo-tag">Open Source</span>
+                </div>
+            </div>
+        </main>
+
+        
+        <section class="action-section fade-in stagger-3">
+            <h2 class="action-title">شروع کنید</h2>
+            <div class="action-buttons">
+                <a href="/generate" class="btn btn-primary">
+                    <i class="fas fa-plus-circle"></i>
+                    ساخت پروفایل جدید
+                </a>
+            </div>
+        </section>
+
+        
+        <section class="features-grid fade-in stagger-4">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-palette"></i>
+                </div>
+                <h3>رایگان و متن باز</h3>
+                <p>پروژه فاسپ یک پروژه آزاد، رایگان و متن باز است، شما هر لحظه می توانید روی پروژه مشارکت کنید و یا آن را بازتوزیع کنید.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <h3>واکنش‌گرا</h3>
+                <p>نمایش عالی در تمام دستگاه‌ها از موبایل تا دسکتاپ با طراحی کاملاً ریسپانسیو</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <h3>سریع و سبک</h3>
+                <p>بارگذاری سریع با بهینه‌سازی پیشرفته و استفاده از تکنولوژی‌های مدرن وب</p>
+            </div>
+        </section>
+
+        
+        <footer class="footer fade-in stagger-4">
+            <div class="footer-content">
+                <div class="footer-text">
+                    <i class="fas fa-heart"></i>
+                    متن باز و آزاد
+                </div>
+                <div class="footer-links">
+                    <a href="/docs" class="footer-link">مستندات</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                }
+            });
+        }, observerOptions);
+
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            const animatedElements = document.querySelectorAll('.fade-in');
+            animatedElements.forEach(element => {
+                observer.observe(element);
+            });
+
+            
+            
+            
+            
+            
+            document.querySelectorAll('.btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                });
+            });
+
+            document.querySelectorAll('.feature-card').forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px) scale(1.02)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+        });
+
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+    </script>
+</body>
+</html>

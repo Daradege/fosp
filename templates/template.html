@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پروفایل {{ json_data.personal.firstName }} {{ json_data.personal.lastName }}</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        
+        @font-face {
+            font-family: Arad;
+            src: url(/Arad.ttf);
+        }
+        :root {
+            --rosewater: #f5e0dc;
+            --flamingo: #f2cdcd;
+            --pink: #f5c2e7;
+            --mauve: #cba6f7;
+            --red: #f38ba8;
+            --maroon: #eba0ac;
+            --peach: #fab387;
+            --yellow: #f9e2af;
+            --green: #a6e3a1;
+            --teal: #94e2d5;
+            --sky: #89dceb;
+            --sapphire: #74c7ec;
+            --blue: #89b4fa;
+            --lavender: #b4befe;
+            --text: #cdd6f4;
+            --subtext1: #bac2de;
+            --subtext0: #a6adc8;
+            --overlay2: #9399b2;
+            --overlay1: #7f849c;
+            --overlay0: #6c7086;
+            --surface2: #585b70;
+            --surface1: #45475a;
+            --surface0: #313244;
+            --base: #1e1e2e;
+            --mantle: #181825;
+            --crust: #11111b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arad', sans-serif;
+
+        }
+
+        body {
+            font-family: 'Arad', sans-serif;
+            background: linear-gradient(135deg, var(--base) 0%, var(--mantle) 100%);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        
+        .profile-header {
+            background: linear-gradient(135deg, var(--surface0) 0%, var(--surface1) 100%);
+            border-radius: 24px;
+            padding: 50px 40px;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--surface1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.1;
+            background: 
+                radial-gradient(circle at 20% 80%, var(--mauve) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, var(--blue) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, var(--pink) 0%, transparent 50%);
+        }
+
+        .profile-info {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .avatar {
+            width: 140px;
+            height: 140px;
+            background: linear-gradient(135deg, var(--mauve) 0%, var(--blue) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            border: 4px solid var(--surface0);
+            box-shadow: 
+                0 0 0 4px var(--surface1),
+                0 20px 40px rgba(0, 0, 0, 0.4);
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--base);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .avatar:hover {
+            transform: scale(1.05) rotate(5deg);
+            box-shadow: 
+                0 0 0 4px var(--mauve),
+                0 25px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .name {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, var(--text) 0%, var(--lavender) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nickname {
+            font-size: 1.3rem;
+            color: var(--subtext1);
+            font-weight: 500;
+            background: var(--surface1);
+            padding: 8px 20px;
+            border-radius: 20px;
+            display: inline-block;
+            border: 1px solid var(--surface2);
+            margin-bottom: 15px;
+        }
+
+        
+        .bio-section {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .bio-text {
+            background: var(--surface1);
+            padding: 25px;
+            border-radius: 16px;
+            border: 1px solid var(--surface2);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .bio-text:hover {
+            border-color: var(--mauve);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .bio-text::before {
+            content: '"';
+            font-size: 4rem;
+            color: var(--mauve);
+            opacity: 0.3;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-family: serif;
+        }
+
+        .bio-text::after {
+            content: '"';
+            font-size: 4rem;
+            color: var(--mauve);
+            opacity: 0.3;
+            position: absolute;
+            bottom: 10px;
+            left: 20px;
+            font-family: serif;
+        }
+
+        
+        .profile-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .profile-content {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+        }
+
+        .card {
+            background: var(--surface0);
+            border-radius: 20px;
+            padding: 35px;
+            border: 1px solid var(--surface1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--mauve), var(--blue), var(--pink));
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            border-color: var(--surface2);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--mauve) 0%, var(--blue) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--base);
+            font-size: 1.3rem;
+            box-shadow: 0 8px 20px rgba(203, 166, 247, 0.3);
+        }
+
+        .card-header h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        
+        .info-grid {
+            display: grid;
+            gap: 18px;
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--surface1);
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            font-weight: 500;
+            color: var(--subtext1);
+            font-size: 0.95rem;
+        }
+
+        .info-value {
+            font-weight: 600;
+            color: var(--text);
+            font-size: 1rem;
+        }
+
+        
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .tag {
+            background: linear-gradient(135deg, var(--surface1) 0%, var(--surface2) 100%);
+            color: var(--text);
+            padding: 10px 18px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border: 1px solid var(--surface2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tag::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .tag:hover::before {
+            left: 100%;
+        }
+
+        .tag:hover {
+            background: linear-gradient(135deg, var(--mauve) 0%, var(--blue) 100%);
+            color: var(--base);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(203, 166, 247, 0.3);
+        }
+
+        .tag.dislike {
+            background: linear-gradient(135deg, var(--surface1) 0%, var(--surface2) 100%);
+        }
+
+        .tag.dislike:hover {
+            background: linear-gradient(135deg, var(--red) 0%, var(--peach) 100%);
+            color: var(--base);
+        }
+
+        
+        .links-grid {
+            display: grid;
+            gap: 16px;
+        }
+
+        .link-item {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 20px;
+            background: var(--surface1);
+            border-radius: 16px;
+            text-decoration: none;
+            color: var(--text);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid var(--surface2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .link-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, var(--mauve), transparent);
+            opacity: 0.1;
+            transition: left 0.6s;
+        }
+
+        .link-item:hover::before {
+            left: 100%;
+        }
+
+        .link-item:hover {
+            background: var(--surface2);
+            transform: translateX(-8px);
+            border-color: var(--mauve);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .link-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--surface0) 0%, var(--surface1) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--mauve);
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            border: 1px solid var(--surface2);
+        }
+
+        .link-item:hover .link-icon {
+            background: linear-gradient(135deg, var(--mauve) 0%, var(--blue) 100%);
+            color: var(--base);
+            transform: scale(1.1);
+        }
+
+        .link-content {
+            flex: 1;
+        }
+
+        .link-title {
+            font-weight: 600;
+            margin-bottom: 6px;
+            font-size: 1.1rem;
+        }
+
+        .link-url {
+            font-size: 0.85rem;
+            color: var(--subtext1);
+            direction: ltr;
+            text-align: left;
+            transition: color 0.3s ease;
+        }
+
+        .link-item:hover .link-url {
+            color: var(--subtext0);
+        }
+
+        .link-arrow {
+            color: var(--overlay1);
+            transition: all 0.3s ease;
+        }
+
+        .link-item:hover .link-arrow {
+            color: var(--mauve);
+            transform: translateX(-5px);
+        }
+
+        
+        .profile-footer {
+            text-align: center;
+            padding: 30px;
+            background: var(--surface0);
+            border-radius: 20px;
+            border: 1px solid var(--surface1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .footer-text {
+            color: var(--subtext1);
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-text i {
+            color: var(--red);
+            animation: heartbeat 2s ease-in-out infinite;
+        }
+
+        .profile-id {
+            background: var(--surface1);
+            padding: 8px 16px;
+            border-radius: 12px;
+            font-family: monospace;
+            font-size: 0.85rem;
+            color: var(--subtext0);
+            border: 1px solid var(--surface2);
+        }
+
+        
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .fade-in {
+            opacity: 0;
+            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .stagger-1 { animation-delay: 0.1s; }
+        .stagger-2 { animation-delay: 0.2s; }
+        .stagger-3 { animation-delay: 0.3s; }
+        .stagger-4 { animation-delay: 0.4s; }
+        .stagger-5 { animation-delay: 0.5s; }
+
+        .float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        
+        @media (max-width: 640px) {
+            .container {
+                padding: 20px 15px;
+            }
+            
+            .profile-header {
+                padding: 30px 20px;
+            }
+            
+            .avatar {
+                width: 100px;
+                height: 100px;
+                font-size: 2rem;
+            }
+            
+            .name {
+                font-size: 2rem;
+            }
+            
+            .card {
+                padding: 25px;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .bio-text {
+                padding: 20px 15px;
+                font-size: 1rem;
+            }
+
+            .bio-text::before,
+            .bio-text::after {
+                font-size: 3rem;
+            }
+        }
+
+        
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--base);
+            border-radius: 6px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--mauve) 0%, var(--blue) 100%);
+            border-radius: 6px;
+            border: 2px solid var(--base);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, var(--blue) 0%, var(--mauve) 100%);
+        }
+
+        
+        ::selection {
+            background: var(--mauve);
+            color: var(--base);
+        }
+
+        
+        .link-item:focus {
+            outline: 2px solid var(--mauve);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="profile-header fade-in">
+            <div class="header-background"></div>
+            <div class="profile-info">
+                <div class="avatar float">
+                    <img src="{{ image }}" width="100%" style="border-radius: 100%;">
+                </div>
+                <h1 class="name">
+                    {{ json_data.personal.firstName }} {{ json_data.personal.lastName }}
+                </h1>
+                {% if json_data.personal.nickname %}
+                <div class="nickname">
+                    به این لقب شناخته می شود: {{ json_data.personal.nickname }}
+                </div>
+                {% endif %}
+                
+                {% if json_data.personal.bio %}
+                <div class="bio-section fade-in stagger-2">
+                    <div class="bio-text">
+                        {{ json_data.personal.bio }}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </header>
+
+        <main class="profile-content">
+            <section class="card fade-in stagger-3">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h2>اطلاعات شخصی</h2>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="info-label">نام کامل:</span>
+                        <span class="info-value">
+                            {{ json_data.personal.firstName }} {{ json_data.personal.lastName }}
+                        </span>
+                    </div>
+                    {% if json_data.personal.nickname %}
+                    <div class="info-item">
+                        <span class="info-label">لقب:</span>
+                        <span class="info-value">{{ json_data.personal.nickname }}</span>
+                    </div>
+                    {% endif %}
+                    {% if json_data.personal.birthday and (json_data.personal.birthday.day or json_data.personal.birthday.month) %}
+                    <div class="info-item">
+                        <span class="info-label">تاریخ تولد:</span>
+                        <span class="info-value">
+                            {% if json_data.personal.birthday.day %}{{ json_data.personal.birthday.day }}{% endif %}
+                            {% if json_data.personal.birthday.month %}/{{ json_data.personal.birthday.month }}{% endif %}
+                            {% if json_data.personal.birthday.year %}/{{ json_data.personal.birthday.year }}{% endif %}
+                        </span>
+                    </div>
+                    {% endif %}
+                </div>
+            </section>
+
+            {% if json_data.personal.birthday.likes %}
+            <section class="card fade-in stagger-4">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h2>علاقه‌مندی‌ها</h2>
+                </div>
+                <div class="tags-container">
+                    {% for like in json_data.personal.birthday.likes %}
+                    <div class="tag">{{ like }}</div>
+                    {% endfor %}
+                </div>
+            </section>
+            {% endif %}
+
+            {% if json_data.personal.birthday.dislikes %}
+            <section class="card fade-in stagger-5">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-thumbs-down"></i>
+                    </div>
+                    <h2>تنفرها</h2>
+                </div>
+                <div class="tags-container">
+                    {% for dislike in json_data.personal.birthday.dislikes %}
+                    <div class="tag dislike">{{ dislike }}</div>
+                    {% endfor %}
+                </div>
+            </section>
+            {% endif %}
+
+            {% if json_data.links %}
+            <section class="card fade-in" style="grid-column: 1 / -1; animation-delay: 0.6s;">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-link"></i>
+                    </div>
+                    <h2>لینک‌ها</h2>
+                </div>
+                <div class="links-grid">
+                    {% for link in json_data.links %}
+                    <a href="{{ link.url }}" target="_blank" rel="noopener noreferrer" class="link-item">
+                        <div class="link-icon">
+                            <i class="fas fa-external-link-alt"></i>
+                        </div>
+                        <div class="link-content">
+                            <div class="link-title">{{ link.title }}</div>
+                            <div class="link-url">{{ link.url }}</div>
+                        </div>
+                        <i class="fas fa-chevron-left link-arrow"></i>
+                    </a>
+                    {% endfor %}
+                </div>
+            </section>
+            {% endif %}
+        </main>
+
+        <footer class="profile-footer fade-in" style="animation-delay: 0.7s;">
+            <div class="footer-content">
+                <div class="footer-text">
+                    <i class="fas fa-heart"></i>
+                    ساخته شده با عشق
+                </div>
+                <div class="profile-id">
+                    متن باز و آزاد - فاسپ
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                }
+            });
+        }, observerOptions);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                observer.observe(card);
+            });
+
+            const bioSection = document.querySelector('.bio-section');
+            if (bioSection) {
+                observer.observe(bioSection);
+            }
+
+            
+                'color: #cba6f7; font-size: 20px; font-weight: bold;');
+            
+                'color: #89b4fa; font-size: 14px;');
+        });
+
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        const bioText = document.querySelector('.bio-text');
+        if (bioText) {
+            bioText.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-2px)';
+            });
+            
+            bioText.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مستندات - سرویس پروفایل‌ساز بله</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: Arad;
+            src: url(/Arad.ttf);
+        }
+        :root {
+            --rosewater: #f5e0dc;
+            --flamingo: #f2cdcd;
+            --pink: #f5c2e7;
+            --mauve: #cba6f7;
+            --red: #f38ba8;
+            --maroon: #eba0ac;
+            --peach: #fab387;
+            --yellow: #f9e2af;
+            --green: #a6e3a1;
+            --teal: #94e2d5;
+            --sky: #89dceb;
+            --sapphire: #74c7ec;
+            --blue: #89b4fa;
+            --lavender: #b4befe;
+            --text: #cdd6f4;
+            --subtext1: #bac2de;
+            --subtext0: #a6adc8;
+            --overlay2: #9399b2;
+            --overlay1: #7f849c;
+            --overlay0: #6c7086;
+            --surface2: #585b70;
+            --surface1: #45475a;
+            --surface0: #313244;
+            --base: #1e1e2e;
+            --mantle: #181825;
+            --crust: #11111b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arad', sans-serif;
+        }
+
+        body {
+            font-family: 'Arad', sans-serif;
+            background: linear-gradient(135deg, var(--base) 0%, var(--mantle) 100%);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--mauve) 0%, var(--blue) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            border: 3px solid var(--surface0);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            font-size: 2rem;
+            color: var(--base);
+        }
+
+        .title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, var(--text) 0%, var(--lavender) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--subtext1);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .nav-link {
+            color: var(--subtext1);
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .nav-link:hover {
+            color: var(--text);
+            background: var(--surface1);
+            border-color: var(--surface2);
+        }
+
+        .nav-link.active {
+            color: var(--mauve);
+            background: var(--surface1);
+            border-color: var(--mauve);
+        }
+
+        .docs-content {
+            background: var(--surface0);
+            border-radius: 20px;
+            padding: 50px;
+            border: 1px solid var(--surface1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .docs-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--mauve), var(--blue), var(--peach));
+        }
+
+        .step {
+            margin-bottom: 50px;
+            padding: 30px;
+            background: var(--surface1);
+            border-radius: 16px;
+            border: 1px solid var(--surface2);
+            transition: all 0.3s ease;
+        }
+
+        .step:hover {
+            border-color: var(--mauve);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--mauve) 0%, var(--blue) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--base);
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .step-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .step-content {
+            color: var(--subtext1);
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .step-image {
+            background: var(--surface0);
+            border-radius: 12px;
+            padding: 25px;
+            border: 1px solid var(--surface2);
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .step-image img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .image-caption {
+            color: var(--subtext1);
+            font-size: 0.9rem;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        .code-block {
+            background: var(--base);
+            border-radius: 12px;
+            padding: 25px;
+            border: 1px solid var(--surface2);
+            margin: 20px 0;
+            direction: ltr;
+            text-align: left;
+        }
+
+        .code-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--surface2);
+        }
+
+        .code-language {
+            color: var(--peach);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .copy-btn {
+            background: var(--surface1);
+            color: var(--text);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            background: var(--mauve);
+            color: var(--base);
+        }
+
+        .code-content {
+            color: var(--text);
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            overflow-x: auto;
+        }
+
+        .url-example {
+            background: var(--surface1);
+            border-radius: 12px;
+            padding: 20px;
+            border: 2px dashed var(--mauve);
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        .url-example code {
+            background: var(--surface0);
+            padding: 10px 15px;
+            border-radius: 8px;
+            color: var(--peach);
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            direction: ltr;
+            display: inline-block;
+        }
+
+        .tips {
+            background: linear-gradient(135deg, var(--surface1) 0%, var(--surface2) 100%);
+            border-radius: 12px;
+            padding: 25px;
+            border: 1px solid var(--surface2);
+            margin-top: 30px;
+        }
+
+        .tips-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            color: var(--yellow);
+        }
+
+        .tips-list {
+            list-style: none;
+            padding-right: 0;
+        }
+
+        .tips-list li {
+            padding: 8px 0;
+            color: var(--subtext1);
+            display: flex;
+            align-items: start;
+            gap: 10px;
+        }
+
+        .tips-list li::before {
+            content: '💡';
+            color: var(--yellow);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: inherit;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--mauve) 0%, var(--blue) 100%);
+            color: var(--base);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(203, 166, 247, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--surface1);
+            color: var(--text);
+            border: 1px solid var(--surface2);
+        }
+
+        .btn-secondary:hover {
+            background: var(--surface2);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 30px;
+            color: var(--subtext1);
+            font-size: 0.9rem;
+        }
+
+        .footer a {
+            color: var(--lavender);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: var(--mauve);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .stagger-1 { animation-delay: 0.1s; }
+        .stagger-2 { animation-delay: 0.2s; }
+        .stagger-3 { animation-delay: 0.3s; }
+        .stagger-4 { animation-delay: 0.4s; }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+            
+            .docs-content {
+                padding: 30px 20px;
+            }
+            
+            .title {
+                font-size: 2rem;
+            }
+            
+            .step {
+                padding: 20px;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .title {
+                font-size: 1.8rem;
+            }
+            
+            .logo {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+            
+            .nav {
+                gap: 10px;
+            }
+            
+            .nav-link {
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--base);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--mauve), var(--blue));
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, var(--blue), var(--mauve));
+        }
+
+        ::selection {
+            background: var(--mauve);
+            color: var(--base);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        
+        <header class="header fade-in">
+            <div class="logo">
+                <i class="fas fa-book"></i>
+            </div>
+            <h1 class="title">مستندات و راهنما</h1>
+            <p class="subtitle">آموزش کامل ساخت و راه‌اندازی پروفایل در بله</p>
+        </header>
+
+        
+        <nav class="nav fade-in stagger-1">
+            <a href="/" class="nav-link">
+                <i class="fas fa-home"></i>
+                صفحه اصلی
+            </a>
+            <a href="/generate" class="nav-link">
+                <i class="fas fa-plus-circle"></i>
+                ساخت پروفایل
+            </a>
+            <a href="/docs" class="nav-link active">
+                <i class="fas fa-book"></i>
+                مستندات
+            </a>
+            <a href="https://github.com/daradege/fosp" class="nav-link">
+                <i class="fab fa-github"></i>
+                کد منبع
+            </a>
+        </nav>
+
+        
+        <main class="docs-content fade-in stagger-2">
+            
+            <div class="step">
+                <div class="step-header">
+                    <div class="step-number">۱</div>
+                    <h2 class="step-title">ایجاد کانال جدید در بله</h2>
+                </div>
+                <div class="step-content">
+                    <p>
+                        ابتدا در اپلیکیشن بله یک کانال جدید ایجاد کنید. این کانال مخصوص پروفایل شما خواهد بود.
+                    </p>
+                </div>
+            </div>
+
+            
+            <div class="step">
+                <div class="step-header">
+                    <div class="step-number">۲</div>
+                    <h2 class="step-title">ساخت پروفایل TOML</h2>
+                </div>
+                <div class="step-content">
+                    <p>
+                        به صفحه <a href="/generate" style="color: var(--lavender);">ساخت پروفایل</a> بروید و اطلاعات خود را وارد کنید. 
+                        سپس فایل TOML تولید شده را کپی کنید.
+                    </p>
+                </div>
+            </div>
+
+            
+            <div class="step">
+                <div class="step-header">
+                    <div class="step-number">۳</div>
+                    <h2 class="step-title">ارسال پروفایل در کانال</h2>
+                </div>
+                <div class="step-content">
+                    <p>
+                        محتوای TOML که کپی کرده‌اید را در کانال خود ارسال کنید. اگر می‌خواهید تصویر پروفایل هم داشته باشید، 
+                        می‌توانید یک عکس آپلود کنید و متن TOML را در قسمت کپشن (Caption) قرار دهید.
+                    </p>
+                    <div class="step-image">
+                        <div style="background: var(--surface2); height: 150px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--subtext1); flex-direction: column; gap: 10px;">
+                            <i class="fas fa-image" style="font-size: 2rem;"></i>
+                            <span>عکس پروفایل + کپشن TOML</span>
+                        </div>
+                        <div class="image-caption">ارسال پست در کانال با تصویر و کپشن</div>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="step">
+                <div class="step-header">
+                    <div class="step-number">۴</div>
+                    <h2 class="step-title">مشاهده پروفایل</h2>
+                </div>
+                <div class="step-content">
+                    <p>
+                        حالا پروفایل زیبای شما آماده است! فقط کافیست آیدی کانالتان را در آدرس زیر وارد کنید:
+                    </p>
+                    <div class="url-example">
+                        <code>fosp.ir/your_channel_id</code>
+                    </div>
+                    <p>
+                        برای مثال اگر آیدی کانال شما <strong>@myprofile</strong> باشد، آدرس پروفایل شما خواهد بود:
+                    </p>
+                    <div class="url-example">
+                        <code>fosp.ir/myprofile</code>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="tips">
+                <div class="tips-header">
+                    <i class="fas fa-lightbulb"></i>
+                    <h3>نکات مهم</h3>
+                </div>
+                <ul class="tips-list">
+                    <li>اطمینان حاصل کنید که کانال شما عمومی باشد</li>
+                    <li>آخرین پست کانال باید حاوی اطلاعات TOML باشد</li>
+                    <li>برای تصویر پروفایل، TOML باید در کپشن عکس قرار گیرد</li>
+                    <li>می‌توانید هر زمان اطلاعات پروفایل را با ارسال پست جدید به‌روز کنید</li>
+                    <li>اطلاعات تماس و لینک‌های خود را به دقت وارد کنید</li>
+                </ul>
+            </div>
+
+            
+            <div class="action-buttons">
+                <a href="/generate" class="btn btn-primary">
+                    <i class="fas fa-plus-circle"></i>
+                    شروع ساخت پروفایل
+                </a>
+                <a href="/" class="btn btn-secondary">
+                    <i class="fas fa-home"></i>
+                    بازگشت به صفحه اصلی
+                </a>
+            </div>
+        </main>
+
+        
+        <footer class="footer fade-in stagger-4">
+            <p>
+                نیاز به کمک دارید؟ با ما در 
+                <a href="https://t.me/support">کانال پشتیبانی</a> 
+                تماس بگیرید
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        
+        function copyCode() {
+            const codeContent = document.getElementById('codeContent');
+            const textArea = document.createElement('textarea');
+            textArea.value = codeContent.textContent;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            
+            
+            const btn = event.target.closest('.copy-btn');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-check"></i> کپی شد!';
+            btn.style.background = 'var(--green)';
+            btn.style.color = 'var(--base)';
+            
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.style.background = '';
+                btn.style.color = '';
+            }, 2000);
+        }
+
+        
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                }
+            });
+        }, observerOptions);
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const animatedElements = document.querySelectorAll('.fade-in');
+            animatedElements.forEach(element => {
+                observer.observe(element);
+            });
+
+            document.querySelectorAll('.btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                });
+            });
+
+            document.querySelectorAll('.step').forEach(step => {
+                step.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-3px)';
+                });
+                
+                step.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+        });
+
+        
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+    </script>
+</body>
+</html>

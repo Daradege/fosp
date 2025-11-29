@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>کاربر یافت نشد</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: Arad;
+            src: url(/Arad.ttf);
+        }
+        :root {
+            --rosewater: #f5e0dc;
+            --flamingo: #f2cdcd;
+            --pink: #f5c2e7;
+            --mauve: #cba6f7;
+            --red: #f38ba8;
+            --maroon: #eba0ac;
+            --peach: #fab387;
+            --yellow: #f9e2af;
+            --green: #a6e3a1;
+            --teal: #94e2d5;
+            --sky: #89dceb;
+            --sapphire: #74c7ec;
+            --blue: #89b4fa;
+            --lavender: #b4befe;
+            --text: #cdd6f4;
+            --subtext1: #bac2de;
+            --subtext0: #a6adc8;
+            --overlay2: #9399b2;
+            --overlay1: #7f849c;
+            --overlay0: #6c7086;
+            --surface2: #585b70;
+            --surface1: #45475a;
+            --surface0: #313244;
+            --base: #1e1e2e;
+            --mantle: #181825;
+            --crust: #11111b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Arad", sans-serif;
+        }
+
+        body {
+            font-family: 'Arad', sans-serif;
+            background: linear-gradient(135deg, var(--base) 0%, var(--mantle) 100%);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            text-align: center;
+            position: relative;
+        }
+
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            background: var(--mauve);
+            border-radius: 50%;
+            opacity: 0.1;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .error-content {
+            background: var(--surface0);
+            border-radius: 24px;
+            padding: 60px 40px;
+            border: 1px solid var(--surface1);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .error-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--mauve), var(--blue), var(--peach));
+        }
+
+        .avatar-placeholder {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, var(--surface1) 0%, var(--surface2) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            border: 4px solid var(--surface0);
+            box-shadow: 
+                0 0 0 4px var(--surface1),
+                0 20px 40px rgba(0, 0, 0, 0.3);
+            font-size: 3rem;
+            color: var(--subtext1);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .error-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--red) 0%, var(--maroon) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: -40px auto 20px;
+            border: 4px solid var(--surface0);
+            box-shadow: 0 10px 25px rgba(243, 139, 168, 0.3);
+            font-size: 2rem;
+            color: var(--base);
+            position: relative;
+            z-index: 2;
+        }
+
+        .error-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--text) 0%, var(--lavender) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+        }
+
+        .error-subtitle {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text);
+        }
+
+        .username {
+            background: linear-gradient(135deg, var(--peach) 0%, var(--yellow) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+        }
+
+        .error-message {
+            font-size: 1.2rem;
+            color: var(--subtext1);
+            margin-bottom: 40px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
+        }
+
+
+        .action-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-family: inherit;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--mauve) 0%, var(--blue) 100%);
+            color: var(--base);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(203, 166, 247, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--surface1);
+            color: var(--text);
+            border: 1px solid var(--surface2);
+        }
+
+        .btn-secondary:hover {
+            background: var(--surface2);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .suggestions {
+            background: var(--surface1);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid var(--surface2);
+        }
+
+        .suggestions h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--lavender);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .suggestion-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            text-align: right;
+        }
+
+        .suggestion-item {
+            background: var(--surface0);
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid var(--surface2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .suggestion-item:hover {
+            border-color: var(--mauve);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .suggestion-username {
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 5px;
+        }
+
+        .suggestion-bio {
+            font-size: 0.9rem;
+            color: var(--subtext1);
+            line-height: 1.4;
+        }
+
+        .search-box {
+            max-width: 400px;
+            margin: 0 auto 30px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 15px 50px 15px 20px;
+            background: var(--surface1);
+            border: 2px solid var(--surface2);
+            border-radius: 12px;
+            font-size: 1rem;
+            font-family: inherit;
+            color: var(--text);
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--mauve);
+            box-shadow: 0 0 0 3px rgba(203, 166, 247, 0.1);
+            background: var(--mantle);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--subtext1);
+            font-size: 1.2rem;
+        }
+
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--mauve);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--subtext1);
+        }
+
+        .footer {
+            margin-top: 40px;
+            color: var(--subtext1);
+            font-size: 0.9rem;
+        }
+
+        .footer a {
+            color: var(--lavender);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: var(--mauve);
+        }
+
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.7; }
+            50% { transform: scale(1.05); opacity: 1; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(180deg); }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .stagger-1 { animation-delay: 0.1s; }
+        .stagger-2 { animation-delay: 0.2s; }
+        .stagger-3 { animation-delay: 0.3s; }
+        .stagger-4 { animation-delay: 0.4s; }
+        .stagger-5 { animation-delay: 0.5s; }
+
+
+        @media (max-width: 768px) {
+            .error-title {
+                font-size: 2.5rem;
+            }
+            
+            .error-subtitle {
+                font-size: 1.4rem;
+            }
+            
+            .error-content {
+                padding: 40px 20px;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+            
+            .suggestion-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats {
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .error-title {
+                font-size: 2rem;
+            }
+            
+            .avatar-placeholder {
+                width: 80px;
+                height: 80px;
+                font-size: 2rem;
+            }
+            
+            .error-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+            
+            .error-message {
+                font-size: 1rem;
+            }
+        }
+
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--base);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--mauve), var(--blue));
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, var(--blue), var(--mauve));
+        }
+
+
+        ::selection {
+            background: var(--mauve);
+            color: var(--base);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        
+        <div class="particles" id="particles"></div>
+
+        
+        <div class="error-content fade-in">
+            
+            <div class="avatar-placeholder">
+                <i class="fas fa-user-slash"></i>
+            </div>
+            
+            
+            <div class="error-icon">
+                <i class="fas fa-times"></i>
+            </div>
+            
+            <h1 class="error-title fade-in stagger-1">کاربر یافت نشد</h1>
+            
+            <h2 class="error-subtitle fade-in stagger-2">
+                پروفایل "<span class="username" id="username">{{ username }}</span>" وجود ندارد
+            </h2>
+            
+            <p class="error-message fade-in stagger-3">
+                متأسفانه کاربری با این نام کاربری در سیستم ثبت نشده است. 
+                ممکن است نام کاربری تغییر کرده باشد یا حساب کاربری حذف شده باشد.
+            </p>
+
+            
+            <div class="action-buttons fade-in stagger-3">
+                <a href="/" class="btn btn-primary">
+                    <i class="fas fa-home"></i>
+                    بازگشت به صفحه اصلی
+                </a>
+                <button onclick="history.back()" class="btn btn-secondary">
+                    <i class="fas fa-arrow-right"></i>
+                    بازگشت به صفحه قبل
+                </button>
+            </div>
+
+        </div>
+
+        
+        <div class="footer fade-in stagger-5">
+            <p>
+                اگر فکر می‌کنید این یک خطاست، لطفاً با 
+                <a href="mailto:support@example.com">پشتیبانی</a> 
+                تماس بگیرید یا 
+                <a href="/report">این کاربر را گزارش</a>
+                دهید.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        
+        function getUsernameFromURL() {
+            const path = window.location.pathname;
+            const username = path.split('/').pop();
+            return username || 'username';
+        }
+
+        
+        function createParticles() {
+            const container = document.getElementById('particles');
+            const particleCount = 12;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                
+                const size = Math.random() * 30 + 10;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                
+                
+                particle.style.animationDelay = `${Math.random() * 8}s`;
+                
+                
+                particle.style.opacity = Math.random() * 0.15 + 0.05;
+                
+                
+                const colors = [var(--mauve), var(--blue), var(--peach), var(--lavender)];
+                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.background = randomColor;
+                
+                container.appendChild(particle);
+            }
+        }
+
+        
+        function setupSearch() {
+            const searchInput = document.querySelector('.search-input');
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    const query = this.value.trim();
+                    if (query) {
+                        
+                        alert(`در حال جستجو برای کاربر: "${query}"`);
+                        this.value = '';
+                    }
+                }
+            });
+        }
+
+        
+        function visitProfile(username) {
+            alert(`در حال هدایت به پروفایل: ${username}\n\nدر نسخه واقعی به پروفایل کاربر هدایت می‌شوید.`);
+        }
+
+        
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                }
+            });
+        }, observerOptions);
+
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            const username = getUsernameFromURL();
+            document.getElementById('username').textContent = username;
+            
+            createParticles();
+            setupSearch();
+            
+            
+            const animatedElements = document.querySelectorAll('.fade-in');
+            animatedElements.forEach(element => {
+                observer.observe(element);
+            });
+
+            document.querySelectorAll('.btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                });
+            });
+
+            document.querySelectorAll('.suggestion-item').forEach(item => {
+                item.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-3px) scale(1.02)';
+                });
+                
+                item.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+        });
+
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+    </script>
+</body>
+</html>

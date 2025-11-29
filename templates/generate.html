@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سازنده پروفایل TOML</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: Arad;
+            src: url(/Arad.ttf);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arad', sans-serif;
+
+        }
+
+        :root {
+            --rosewater: #f5e0dc;
+            --flamingo: #f2cdcd;
+            --pink: #f5c2e7;
+            --mauve: #cba6f7;
+            --red: #f38ba8;
+            --maroon: #eba0ac;
+            --peach: #fab387;
+            --yellow: #f9e2af;
+            --green: #a6e3a1;
+            --teal: #94e2d5;
+            --sky: #89dceb;
+            --sapphire: #74c7ec;
+            --blue: #89b4fa;
+            --lavender: #b4befe;
+            --text: #cdd6f4;
+            --subtext1: #bac2de;
+            --subtext0: #a6adc8;
+            --overlay2: #9399b2;
+            --overlay1: #7f849c;
+            --overlay0: #6c7086;
+            --surface2: #585b70;
+            --surface1: #45475a;
+            --surface0: #313244;
+            --base: #1e1e2e;
+            --mantle: #181825;
+            --crust: #11111b;
+        }
+
+        body {
+            font-family: 'Arad', sans-serif;
+            background: linear-gradient(135deg, var(--base) 0%, var(--mantle) 100%);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--surface0);
+            border-radius: 24px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            border: 1px solid var(--surface1);
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--mauve) 0%, var(--blue) 100%);
+            color: var(--base);
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="%2311111b20"><circle cx="20" cy="20" r="2"/><circle cx="80" cy="40" r="3"/><circle cx="40" cy="80" r="2"/><circle cx="70" cy="20" r="1"/></svg>');
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            font-weight: 700;
+            position: relative;
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+            font-weight: 500;
+            position: relative;
+        }
+
+        .tabs {
+            display: flex;
+            background: var(--surface1);
+            border-bottom: 1px solid var(--surface2);
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: 600;
+            color: var(--subtext1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tab-btn::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--mauve), var(--blue));
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .tab-btn.active {
+            color: var(--text);
+            background: var(--surface0);
+        }
+
+        .tab-btn.active::before {
+            width: 80%;
+        }
+
+        .tab-btn:hover {
+            color: var(--text);
+            background: var(--surface0);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 40px;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-section {
+            background: var(--surface1);
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 20px;
+            border: 1px solid var(--surface2);
+            transition: all 0.3s ease;
+        }
+
+        .form-section:hover {
+            border-color: var(--mauve);
+            transform: translateY(-2px);
+        }
+
+        .form-section h2 {
+            color: var(--lavender);
+            margin-bottom: 25px;
+            font-size: 1.4em;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .form-section h2 i {
+            font-size: 1.3em;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--text);
+            font-size: 1em;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="url"],
+        textarea {
+            width: 100%;
+            padding: 15px 20px;
+            background: var(--surface0);
+            border: 2px solid var(--surface2);
+            border-radius: 12px;
+            font-size: 1em;
+            font-family: inherit;
+            color: var(--text);
+            transition: all 0.3s ease;
+            resize: vertical;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--mauve);
+            box-shadow: 0 0 0 3px rgba(203, 166, 247, 0.1);
+            background: var(--mantle);
+        }
+
+        .birthday-inputs {
+            display: flex;
+            gap: 15px;
+        }
+
+        .birthday-inputs input {
+            flex: 1;
+        }
+
+        .help-text {
+            color: var(--subtext1);
+            font-size: 0.85em;
+            margin-top: 8px;
+            display: block;
+            line-height: 1.5;
+        }
+
+        .link-item {
+            background: var(--surface0);
+            padding: 20px;
+            border: 1px solid var(--surface2);
+            border-radius: 12px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .link-item:hover {
+            border-color: var(--mauve);
+            transform: translateX(-5px);
+        }
+
+        .link-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .link-title {
+            font-weight: 600;
+            color: var(--lavender);
+            font-size: 1.1em;
+        }
+
+        .remove-link {
+            background: linear-gradient(135deg, var(--red), var(--maroon));
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .remove-link:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(243, 139, 168, 0.3);
+        }
+
+        .btn-primary, .btn-secondary {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--mauve), var(--blue));
+            color: var(--base);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(203, 166, 247, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--surface2);
+            color: var(--text);
+            border: 1px solid var(--surface1);
+        }
+
+        .btn-secondary:hover {
+            background: var(--surface1);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-actions {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .import-section {
+            text-align: center;
+        }
+
+        .output-section {
+            padding: 40px;
+            background: var(--surface1);
+            border-radius: 20px;
+            margin-top: 30px;
+        }
+
+        .output-actions {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        #tomlOutput {
+            background: var(--base);
+            color: var(--text);
+            padding: 25px;
+            border-radius: 12px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.6;
+            border: 1px solid var(--surface2);
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .success-message {
+            background: linear-gradient(135deg, var(--green), var(--teal));
+            color: var(--base);
+            padding: 15px 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 600;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-10px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .bio-counter {
+            text-align: left;
+            font-size: 0.8em;
+            color: var(--subtext1);
+            margin-top: 5px;
+        }
+
+        .bio-counter.warning {
+            color: var(--peach);
+        }
+
+        .bio-counter.error {
+            color: var(--red);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                border-radius: 20px;
+            }
+            
+            header {
+                padding: 30px 20px;
+            }
+            
+            header h1 {
+                font-size: 2em;
+            }
+            
+            .tab-content {
+                padding: 30px 20px;
+            }
+            
+            .form-section {
+                padding: 25px;
+            }
+            
+            .birthday-inputs {
+                flex-direction: column;
+            }
+            
+            .output-actions {
+                flex-direction: column;
+            }
+            
+            .btn-primary, .btn-secondary {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            
+            header h1 {
+                font-size: 1.7em;
+            }
+            
+            .tab-btn {
+                padding: 15px;
+                font-size: 1em;
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--surface1);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--mauve), var(--blue));
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, var(--blue), var(--mauve));
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-file-code"></i> سازنده پروفایل TOML</h1>
+            <p>پروفایل شخصی خود را بسازید و به صورت فایل TOML ذخیره کنید</p>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="create">
+                <i class="fas fa-plus-circle"></i>
+                ایجاد پروفایل جدید
+            </button>
+            <button class="tab-btn" data-tab="import">
+                <i class="fas fa-edit"></i>
+                ویرایش پروفایل موجود
+            </button>
+        </div>
+
+        <div id="create" class="tab-content active">
+            <form id="profileForm" class="profile-form">
+                <div class="form-section">
+                    <h2><i class="fas fa-user"></i> اطلاعات شخصی</h2>
+                    
+                    <div class="form-group">
+                        <label for="firstName">نام *</label>
+                        <input type="text" id="firstName" name="firstName" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lastName">نام خانوادگی *</label>
+                        <input type="text" id="lastName" name="lastName" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nickname">لقب</label>
+                        <input type="text" id="nickname" name="nickname" placeholder="لقب یا نام مستعار شما">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="birthday">تاریخ تولد</label>
+                        <div class="birthday-inputs">
+                            <input type="number" id="birthDay" name="birthDay" placeholder="روز" min="1" max="31">
+                            <input type="number" id="birthMonth" name="birthMonth" placeholder="ماه" min="1" max="12">
+                            <input type="number" id="birthYear" name="birthYear" placeholder="سال" min="1300" max="1405">
+                        </div>
+                        <span class="help-text">می‌توانید فقط روز و ماه را وارد کنید. سال اختیاری است</span>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2><i class="fas fa-edit"></i> بیوگرافی</h2>
+                    
+                    <div class="form-group">
+                        <label for="bio">درباره من</label>
+                        <textarea id="bio" name="bio" placeholder="در این قسمت می‌توانید درباره خودتان، علایق، مهارت‌ها و تجربیاتتان بنویسید..." rows="5" maxlength="200"></textarea>
+                        <div class="bio-counter" id="bioCounter">0/200 کاراکتر</div>
+                        <span class="help-text">حداکثر ۲۰۰ کاراکتر - این متن در پروفایل شما نمایش داده می‌شود</span>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2><i class="fas fa-heart"></i> علاقه‌مندی‌ها و تنفرها</h2>
+                    
+                    <div class="form-group">
+                        <label for="likes">علاقه‌مندی‌ها</label>
+                        <textarea id="likes" name="likes" placeholder="کتاب، موسیقی، برنامه‌نویسی، ورزش..." rows="3"></textarea>
+                        <span class="help-text">موارد را با کاما (,) از هم جدا کنید</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dislikes">تنفرها</label>
+                        <textarea id="dislikes" name="dislikes" placeholder="شلوغی، ترافیک، غذاهای تند..." rows="3"></textarea>
+                        <span class="help-text">موارد را با کاما (,) از هم جدا کنید</span>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2><i class="fas fa-link"></i> لینک‌ها</h2>
+                    <div id="linksContainer"></div>
+                    <button type="button" id="addLinkBtn" class="btn-secondary">
+                        <i class="fas fa-plus"></i>
+                        افزودن لینک
+                    </button>
+                    <span class="help-text">می‌توانید تا ۶ لینک به شبکه‌های اجتماعی، وبسایت و ... اضافه کنید</span>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-file-export"></i>
+                        تولید فایل پروفایل
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div id="import" class="tab-content">
+            <div class="import-section">
+                <h2><i class="fas fa-file-import"></i> ویرایش پروفایل موجود</h2>
+                <div class="form-group">
+                    <label for="tomlInput">محتوای فایل TOML خود را اینجا وارد کنید</label>
+                    <textarea id="tomlInput" rows="12" placeholder='[personal]
+firstName = "John"
+lastName = "Doe"
+nickname = "johnny"
+bio = "یک برنامه‌نویس علاقه‌مند به تکنولوژی و یادگیری مستمر..."
+
+[personal.birthday]
+day = 15
+month = 8
+
+likes = ["برنامه نویسی", "موسیقی"]
+dislikes = ["شلوغی"]
+
+[[links]]
+title = "وبسایت"
+url = "https://example.com"'></textarea>
+                    <span class="help-text">محتوای فایل TOML قبلی خود را کپی و در اینجا paste کنید</span>
+                </div>
+                <button id="importBtn" class="btn-primary">
+                    <i class="fas fa-upload"></i>
+                    بارگذاری و ویرایش
+                </button>
+            </div>
+        </div>
+
+        <div id="output" class="output-section hidden">
+            <div class="success-message">
+                <i class="fas fa-check-circle"></i>
+                فایل پروفایل شما با موفقیت تولید شد!
+            </div>
+            <h2><i class="fas fa-file-code"></i> فایل پروفایل شما</h2>
+            <div class="output-actions">
+                <button id="copyBtn" class="btn-secondary">
+                    <i class="fas fa-copy"></i>
+                    کپی محتوا
+                </button>
+                <button id="downloadBtn" class="btn-primary">
+                    <i class="fas fa-download"></i>
+                    دانلود فایل
+                </button>
+                <button id="newProfileBtn" class="btn-secondary">
+                    <i class="fas fa-plus"></i>
+                    پروفایل جدید
+                </button>
+            </div>
+            <pre id="tomlOutput"></pre>
+        </div>
+    </div>
+
+    <script>
+        class ProfileGenerator {
+            constructor() {
+                this.currentLinks = 0;
+                this.maxLinks = 6;
+                this.init();
+            }
+
+            init() {
+                this.setupEventListeners();
+                this.addLink();
+                this.setupBioCounter();
+            }
+
+            setupEventListeners() {
+                document.querySelectorAll('.tab-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => this.switchTab(e.target.dataset.tab));
+                });
+
+                document.getElementById('addLinkBtn').addEventListener('click', () => this.addLink());
+
+                document.getElementById('profileForm').addEventListener('submit', (e) => this.generateTOML(e));
+
+                document.getElementById('importBtn').addEventListener('click', () => this.importTOML());
+
+                document.getElementById('copyBtn').addEventListener('click', () => this.copyTOML());
+                document.getElementById('downloadBtn').addEventListener('click', () => this.downloadTOML());
+                document.getElementById('newProfileBtn').addEventListener('click', () => this.newProfile());
+            }
+
+            setupBioCounter() {
+                const bioTextarea = document.getElementById('bio');
+                const bioCounter = document.getElementById('bioCounter');
+
+                bioTextarea.addEventListener('input', function() {
+                    const length = this.value.length;
+                    bioCounter.textContent = `${length}/200 کاراکتر`;
+                    
+                    bioCounter.className = 'bio-counter';
+                    if (length > 180) {
+                        bioCounter.classList.add('warning');
+                    }
+                    if (length > 200) {
+                        bioCounter.classList.add('error');
+                    }
+                });
+            }
+
+            switchTab(tabName) {
+                document.querySelectorAll('.tab-btn').forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.tab === tabName);
+                });
+
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.toggle('active', content.id === tabName);
+                });
+
+                document.getElementById('output').classList.add('hidden');
+            }
+
+            addLink() {
+                if (this.currentLinks >= this.maxLinks) {
+                    alert(`حداکثر ${this.maxLinks} لینک می‌توانید اضافه کنید`);
+                    return;
+                }
+
+                this.currentLinks++;
+                const linkId = `link${this.currentLinks}`;
+
+                const linkHTML = `
+                    <div class="link-item" data-link-id="${linkId}">
+                        <div class="link-header">
+                            <span class="link-title">لینک ${this.currentLinks}</span>
+                            <button type="button" class="remove-link" onclick="profileGenerator.removeLink('${linkId}')">
+                                <i class="fas fa-trash"></i>
+                                حذف
+                            </button>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="${linkId}_title" placeholder="عنوان لینک (مثال: وبسایت شخصی)" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="url" id="${linkId}_url" placeholder="آدرس URL (مثال: https://example.com)" required>
+                        </div>
+                    </div>
+                `;
+
+                document.getElementById('linksContainer').insertAdjacentHTML('beforeend', linkHTML);
+                this.updateAddLinkButton();
+            }
+
+            removeLink(linkId) {
+                const linkElement = document.querySelector(`[data-link-id="${linkId}"]`);
+                if (linkElement) {
+                    linkElement.remove();
+                    this.currentLinks--;
+                    this.renumberLinks();
+                    this.updateAddLinkButton();
+                }
+            }
+
+            renumberLinks() {
+                const linkItems = document.querySelectorAll('.link-item');
+                linkItems.forEach((item, index) => {
+                    const titleSpan = item.querySelector('.link-title');
+                    titleSpan.textContent = `لینک ${index + 1}`;
+                });
+                this.currentLinks = linkItems.length;
+            }
+
+            updateAddLinkButton() {
+                const addBtn = document.getElementById('addLinkBtn');
+                if (this.currentLinks >= this.maxLinks) {
+                    addBtn.disabled = true;
+                    addBtn.innerHTML = '<i class="fas fa-ban"></i> حداکثر لینک‌ها';
+                } else {
+                    addBtn.disabled = false;
+                    addBtn.innerHTML = '<i class="fas fa-plus"></i> افزودن لینک';
+                }
+            }
+
+            generateTOML(e) {
+                e.preventDefault();
+
+                const formData = this.getFormData();
+                const tomlContent = this.formatTOML(formData);
+
+                document.getElementById('tomlOutput').textContent = tomlContent;
+                document.getElementById('output').classList.remove('hidden');
+                
+                document.getElementById('output').scrollIntoView({ behavior: 'smooth' });
+            }
+
+            getFormData() {
+                const data = {
+                    firstName: document.getElementById('firstName').value.trim(),
+                    lastName: document.getElementById('lastName').value.trim(),
+                    nickname: document.getElementById('nickname').value.trim(),
+                    bio: document.getElementById('bio').value.trim(),
+                };
+
+                const day = document.getElementById('birthDay').value;
+                const month = document.getElementById('birthMonth').value;
+                const year = document.getElementById('birthYear').value;
+                
+                if (day || month || year) {
+                    data.birthday = {};
+                    if (day) data.birthday.day = parseInt(day);
+                    if (month) data.birthday.month = parseInt(month);
+                    if (year) data.birthday.year = parseInt(year);
+                }
+
+                const likes = document.getElementById('likes').value.split(',').map(item => item.trim()).filter(item => item);
+                const dislikes = document.getElementById('dislikes').value.split(',').map(item => item.trim()).filter(item => item);
+
+                if (likes.length > 0) data.likes = likes;
+                if (dislikes.length > 0) data.dislikes = dislikes;
+
+                const links = [];
+                document.querySelectorAll('.link-item').forEach(item => {
+                    const title = item.querySelector('input[type="text"]').value.trim();
+                    const url = item.querySelector('input[type="url"]').value.trim();
+                    
+                    if (title && url) {
+                        links.push({ title, url });
+                    }
+                });
+
+                if (links.length > 0) data.links = links;
+
+                return data;
+            }
+
+            formatTOML(data) {
+                let toml = `# پروفایل شخصی - ساخته شده با سازنده پروفایل TOML\n`;
+                toml += `# تاریخ ایجاد: ${new Date().toLocaleDateString('fa-IR')}\n\n`;
+
+                toml += `[personal]\n`;
+                toml += `firstName = "${this.escapeString(data.firstName)}"\n`;
+                toml += `lastName = "${this.escapeString(data.lastName)}"\n`;
+                if (data.nickname) {
+                    toml += `nickname = "${this.escapeString(data.nickname)}"\n`;
+                }
+                if (data.bio) {
+                    toml += `bio = "${this.escapeString(data.bio)}"\n`;
+                }
+                toml += `\n`;
+
+                if (data.birthday) {
+                    toml += `[personal.birthday]\n`;
+                    if (data.birthday.day) toml += `day = ${data.birthday.day}\n`;
+                    if (data.birthday.month) toml += `month = ${data.birthday.month}\n`;
+                    if (data.birthday.year) toml += `year = ${data.birthday.year}\n`;
+                    toml += `\n`;
+                }
+
+                if (data.likes) {
+                    toml += `likes = [\n`;
+                    data.likes.forEach(like => {
+                        toml += `  "${this.escapeString(like)}",\n`;
+                    });
+                    toml += `]\n\n`;
+                }
+
+                if (data.dislikes) {
+                    toml += `dislikes = [\n`;
+                    data.dislikes.forEach(dislike => {
+                        toml += `  "${this.escapeString(dislike)}",\n`;
+                    });
+                    toml += `]\n\n`;
+                }
+
+                if (data.links && data.links.length > 0) {
+                    toml += `[[links]]\n`;
+                    data.links.forEach((link, index) => {
+                        if (index > 0) toml += `\n[[links]]\n`;
+                        toml += `title = "${this.escapeString(link.title)}"\n`;
+                        toml += `url = "${this.escapeString(link.url)}"\n`;
+                    });
+                }
+
+                return toml;
+            }
+
+            escapeString(str) {
+                return str.replace(/"/g, '\\"').replace(/\n/g, '\\n');
+            }
+
+            importTOML() {
+                const tomlInput = document.getElementById('tomlInput').value.trim();
+                
+                if (!tomlInput) {
+                    alert('لطفا محتوای TOML را وارد کنید');
+                    return;
+                }
+
+                try {
+                    const data = this.parseTOML(tomlInput);
+                    this.populateForm(data);
+                    this.switchTab('create');
+                    
+                    const successMsg = document.createElement('div');
+                    successMsg.className = 'success-message';
+                    successMsg.innerHTML = '<i class="fas fa-check-circle"></i> پروفایل با موفقیت بارگذاری شد!';
+                    document.getElementById('create').insertBefore(successMsg, document.getElementById('create').firstChild);
+                    
+                    setTimeout(() => successMsg.remove(), 3000);
+                } catch (error) {
+                    alert('خطا در خواندن فایل TOML: ' + error.message);
+                }
+            }
+
+            parseTOML(tomlContent) {
+                const data = {};
+                const lines = tomlContent.split('\n');
+                let currentSection = '';
+                
+                for (let line of lines) {
+                    line = line.trim();
+                    
+                    if (!line || line.startsWith('#')) continue;
+
+                    if (line.startsWith('[')) {
+                        currentSection = line.match(/\[([^\]]+)\]/)?.[1] || '';
+                        continue;
+                    }
+
+                    const match = line.match(/^(\w+)\s*=\s*(.+)$/);
+                    if (match) {
+                        const [, key, value] = match;
+                        
+                        if (currentSection === 'personal') {
+                            data[key] = this.parseValue(value);
+                        } else if (currentSection === 'personal.birthday') {
+                            if (!data.birthday) data.birthday = {};
+                            data.birthday[key] = this.parseValue(value);
+                        }
+                    }
+
+                    if (line === 'likes = [' || line === 'dislikes = [') {
+                        const arrayName = line.split(' = [')[0];
+                        data[arrayName] = this.parseArray(lines, lines.indexOf(line));
+                    }
+
+                    if (line === '[[links]]') {
+                        if (!data.links) data.links = [];
+                        data.links.push(this.parseLink(lines, lines.indexOf(line)));
+                    }
+                }
+
+                return data;
+            }
+
+            parseValue(value) {
+                value = value.trim();
+                
+                if (value.startsWith('"') && value.endsWith('"')) {
+                    return value.slice(1, -1).replace(/\\"/g, '"').replace(/\\n/g, '\n');
+                }
+                
+                if (/^-?\d+$/.test(value)) {
+                    return parseInt(value);
+                }
+                
+                if (value.startsWith('[') && value.endsWith(']')) {
+                    return this.parseArrayValue(value);
+                }
+                
+                return value;
+            }
+
+            parseArrayValue(value) {
+                const items = value.slice(1, -1).split(',').map(item => item.trim());
+                return items.map(item => this.parseValue(item));
+            }
+
+            parseArray(lines, startIndex) {
+                const array = [];
+                for (let i = startIndex + 1; i < lines.length; i++) {
+                    const line = lines[i].trim();
+                    if (line === ']') break;
+                    if (line.endsWith(',')) {
+                        const value = line.slice(0, -1).trim();
+                        array.push(this.parseValue(value));
+                    }
+                }
+                return array;
+            }
+
+            parseLink(lines, startIndex) {
+                const link = {};
+                for (let i = startIndex + 1; i < lines.length; i++) {
+                    const line = lines[i].trim();
+                    if (line.startsWith('[[')) break;
+                    if (!line) continue;
+                    
+                    const match = line.match(/^(\w+)\s*=\s*(.+)$/);
+                    if (match) {
+                        const [, key, value] = match;
+                        link[key] = this.parseValue(value);
+                    }
+                }
+                return link;
+            }
+
+            populateForm(data) {
+                document.getElementById('firstName').value = data.firstName || '';
+                document.getElementById('lastName').value = data.lastName || '';
+                document.getElementById('nickname').value = data.nickname || '';
+                document.getElementById('bio').value = data.bio || '';
+
+                document.getElementById('birthDay').value = data.birthday?.day || '';
+                document.getElementById('birthMonth').value = data.birthday?.month || '';
+                document.getElementById('birthYear').value = data.birthday?.year || '';
+
+                document.getElementById('likes').value = data.likes?.join(', ') || '';
+                document.getElementById('dislikes').value = data.dislikes?.join(', ') || '';
+
+                this.clearLinks();
+                if (data.links) {
+                    data.links.forEach(link => {
+                        this.addLink();
+                        const lastLink = document.querySelector('.link-item:last-child');
+                        lastLink.querySelector('input[type="text"]').value = link.title || '';
+                        lastLink.querySelector('input[type="url"]').value = link.url || '';
+                    });
+                }
+
+                const bioCounter = document.getElementById('bioCounter');
+                const bioLength = document.getElementById('bio').value.length;
+                bioCounter.textContent = `${bioLength}/200 کاراکتر`;
+            }
+
+            clearLinks() {
+                document.getElementById('linksContainer').innerHTML = '';
+                this.currentLinks = 0;
+                this.updateAddLinkButton();
+            }
+
+            copyTOML() {
+                const tomlContent = document.getElementById('tomlOutput').textContent;
+                navigator.clipboard.writeText(tomlContent).then(() => {
+                    const btn = document.getElementById('copyBtn');
+                    const originalText = btn.innerHTML;
+                    btn.innerHTML = '<i class="fas fa-check"></i> کپی شد!';
+                    setTimeout(() => {
+                        btn.innerHTML = originalText;
+                    }, 2000);
+                });
+            }
+
+            downloadTOML() {
+                const tomlContent = document.getElementById('tomlOutput').textContent;
+                const blob = new Blob([tomlContent], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'profile.toml';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }
+
+            newProfile() {
+                document.getElementById('profileForm').reset();
+                this.clearLinks();
+                this.addLink();
+                document.getElementById('output').classList.add('hidden');
+                
+                document.getElementById('bioCounter').textContent = '0/200 کاراکتر';
+                document.getElementById('bioCounter').className = 'bio-counter';
+            }
+        }
+
+        const profileGenerator = new ProfileGenerator();
+    </script>
+</body>
+</html>
